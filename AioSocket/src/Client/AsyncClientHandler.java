@@ -20,6 +20,7 @@ public class AsyncClientHandler implements CompletionHandler<Void, AsyncClientHa
     private String host;  
     private int port;  
     private CountDownLatch latch;  
+    protected static Semaphore semphore = new Semaphore(1);      //防止异步写报错
     public AsyncClientHandler(String host, int port) {  
         this.host = host;  
         this.port = port;  
@@ -79,6 +80,14 @@ public class AsyncClientHandler implements CompletionHandler<Void, AsyncClientHa
         ByteBuffer writeBuffer = ByteBuffer.allocate(req.length);  
         writeBuffer.put(req);  
         writeBuffer.flip();  
+        
+        
+        
+         try {
+            semphore.acquire();       //这里控制异步写
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AsyncClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+        }
         //异步写  
         clientChannel.write(writeBuffer, writeBuffer,new WriteCompletionHandler(clientChannel, latch));  
     }  
