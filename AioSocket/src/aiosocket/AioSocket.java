@@ -1,36 +1,23 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package aiosocket;
-
-import Client.Client;
-import Server.Server;
-import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
+ * 
+ * @ClassName:  AioSocket   
+ * @Description:AioSocket版本说明文件   
+ * @author: 申梦杰 
+ * @date:   2019年7月3日 下午7:52:59
+ * @version 1.8.0   
+ * @param    
  *
- * @author Administrator
  */
 public class AioSocket {
-    public static void main(String[] args) throws Exception {
-          //运行服务器  
-        Server.start();  
-        try {
-            //避免客户端先于服务器启动前执行代码
-            Thread.sleep(100);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(AioSocket.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //运行客户端   
-        Client.start();  
-        System.out.println("请输入请求消息：");  
-        Scanner scanner = new Scanner(System.in);  
-        while(Client.sendMsg(scanner.nextLine()));  
+    public static void main(String[] args) {
+        System.out.println("Please work StringMessageServerHandler and StringMessageClientHandler one by one!");
+        System.out.println("AioSocket1.0.0测试版的特点:"
+                + "\n\t\t并发支持多客户端!"
+                +"\n\t\t解决整包和粘包问题!"
+                +"\n\t\t可扩展性和可用性很强!"
+                +"\n\t\t很好框架设计!"
+                +"\n\t\tAioSocket1.0.0正式版会解决半包问题,完善模块功能,和优化代码性能!");
     }
     
 }

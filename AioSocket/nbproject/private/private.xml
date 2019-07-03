@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/JAVANetbeans/AioSocket/src/Server/Server.java</file>
-            <file>file:/D:/JAVANetbeans/AioSocket/src/Server/AcceptHandler.java</file>
-            <file>file:/D:/JAVANetbeans/AioSocket/src/Client/Client.java</file>
-            <file>file:/D:/JAVANetbeans/AioSocket/src/Client/WriteCompletionHandler.java</file>
-            <file>file:/D:/JAVANetbeans/AioSocket/src/Server/AsyncServerHandler.java</file>
-            <file>file:/D:/JAVANetbeans/AioSocket/src/Server/ReadCompletionHandler.java</file>
-            <file>file:/D:/JAVANetbeans/AioSocket/src/Client/AsyncClientHandler.java</file>
+            <file>file:/D:/JAVANetbeans/AioSocket/src/aiosocket/StringMessageClientHandler.java</file>
+            <file>file:/D:/JAVANetbeans/AioSocket/src/aiosocket/StringMessageServerHandler.java</file>
+            <file>file:/D:/JAVANetbeans/AioSocket/src/Transport/WriteCompletionHandler.java</file>
+            <file>file:/D:/JAVANetbeans/AioSocket/src/Transport/AioServer.java</file>
+            <file>file:/D:/JAVANetbeans/AioSocket/src/Transport/ReadCompletionHandler.java</file>
             <file>file:/D:/JAVANetbeans/AioSocket/src/aiosocket/AioSocket.java</file>
-            <file>file:/D:/JAVANetbeans/AioSocket/src/Client/ReadCompletionHandler.java</file>
+            <file>file:/D:/JAVANetbeans/AioSocket/src/Transport/StringProtocol.java</file>
         </group>
     </open-files>
 </project-private>
