@@ -92,7 +92,7 @@ public class AioClient<T> {
          byte i = 0;
           @Override
           public Thread newThread(Runnable r) {
-              return new Thread(r,"smart-socket:AIO-" + (++i));
+              return new Thread(r,"AioSocket:session-" + (++i));
           }
       });
       this.sessionFactory = new SessionFactory<AioChannelSession<T>,AsynchronousSocketChannel>(){     
