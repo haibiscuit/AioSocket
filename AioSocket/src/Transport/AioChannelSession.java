@@ -142,7 +142,7 @@ public class AioChannelSession<T> {
      * @throws
      */
     public void readStickDataProcess(boolean readResult){  //粘包数据的处理
-        while(readByteBuffer.hasRemaining()&&(readByteBuffer.remaining()>=readByteBuffer.getInt(0))){  //粘包的判断
+        while(readByteBuffer.hasRemaining()&&(readByteBuffer.remaining()>=readByteBuffer.getInt(readByteBuffer.position()))){  //粘包的判断
             T msg = ioServerConfig.getProtocol().decode(readByteBuffer, this);  //此时数据处于可读状态
             ioServerConfig.getMessageHandler().Process(this, msg);   //读完处理消息   
         }
