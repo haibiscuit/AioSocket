@@ -23,7 +23,7 @@ public class StringProtocol implements Protocol<String>{
 //            return null;
 //        }
         //判断是否存在半包情况
-        int len = readBuffer.getInt(0);
+        int len = readBuffer.getInt(readBuffer.position());
         readBuffer.getInt();//跳过length字段
         byte[] bytes = new byte[len - INT_LENGTH];
         readBuffer.get(bytes);
