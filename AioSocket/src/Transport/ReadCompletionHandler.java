@@ -1,5 +1,6 @@
 package Transport;
 
+import java.nio.ByteBuffer;
 import java.nio.channels.CompletionHandler;
 
 /**
@@ -16,10 +17,12 @@ public class ReadCompletionHandler<T> implements CompletionHandler<Integer , Aio
     @Override
     public void completed(Integer result, AioChannelSession<T> session) {
 //        System.out.println("读完当前线程:  "+Thread.currentThread().getName());
+        ByteBuffer byteBuffer = null;
         int a = 0; 
         try{
-                session.getReadByteBuffer().flip();     //将数据改成可读状态
-                a = session.getReadByteBuffer().getInt(0);      //得到编码的数据
+                byteBuffer = session.getReadByteBuffer();
+                byteBuffer.flip();//将数据改成可读状态
+                a = session.getReadByteBuffer().getInt(byteBuffer.position());      //得到编码的数据
 //                System.out.println("a:  "+a+"     剩余数据:  "+session.getReadByteBuffer().remaining());
             if(session.getReadByteBuffer().remaining()==a){   //说明没有半包和粘包情况
                 session.readDataProcess(result==-1);   //处理数据，数据处于可读状态
