@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  * 
  * @ClassName:  AioChannelSession，封装AsynchronousSocketChannel类
  * @Description:   socket会话   
- * @author: 申梦杰 
+ * @author: haibiscuit
  * @date:   2019年7月3日 下午8:18:26
  * @version 1.8.0   
  * @param  @param <T>  
@@ -20,15 +20,16 @@ public class AioChannelSession<T> {
  
     protected AsynchronousSocketChannel channel;   //对接收到的channel封装
     
-    private final ReadCompletionHandler<T> readCompletionHandler;  //读回调
-    private final WriteCompletionHandler<T> writeCompletionHandler;  //写回调
-    private final AioServerConfig<T> ioServerConfig;    //channel的配置
+    private final ReadCompletionHandler<T> readCompletionHandler;    //读回调
+    private final WriteCompletionHandler<T> writeCompletionHandler;    //写回调
+    private final AioServerConfig<T> ioServerConfig;     //channel的配置
     
     
     private final Semaphore readSemaphore = new Semaphore(1);   //写并发控制
     private final Semaphore writeSemphore = new Semaphore(1);   //读并发控制
 
-    private final ByteBuffer readByteBuffer = ByteBuffer.allocateDirect(512);  //这里直接使用直接内存
+    private final ByteBuffer readByteBuffer = ByteBuffer.allocateDirect(512);   //这里直接使用直接内存
+    
     /**
      * 
      * @Title:  AioChannelSession   
@@ -66,15 +67,23 @@ public class AioChannelSession<T> {
      * @throws
      */
     protected final void readFromChannel(ByteBuffer byteBuffer){
-//        System.out.println("读数据当前线程:  "+Thread.currentThread().getName());
+        System.out.println("读数据当前线程:  "+Thread.currentThread().getName());
         try {
             readSemaphore.acquire();   //这里会阻塞
-//            System.out.println("读数据获取锁当前线程:  "+Thread.currentThread().getName());
+            System.out.println("读数据获取锁当前线程:  "+Thread.currentThread().getName());
         } catch (InterruptedException ex) {
             Logger.getLogger(AioChannelSession.class.getName()).log(Level.SEVERE, null, ex);
         }
         channel.read(byteBuffer, this, readCompletionHandler);
     }
+    /**
+     * 
+     * @Title: continueRead   
+     * @Description: 遇到半包继续读   
+     * @param:       
+     * @return: void      
+     * @throws
+     */
     protected final void continueRead(){
         readFromChannel(readByteBuffer);
     }
@@ -89,7 +98,7 @@ public class AioChannelSession<T> {
     protected final void writeToChannel(ByteBuffer byteBuffer){
         try {
             writeSemphore.acquire();     //这里会阻塞
-//            System.out.println("写数据获取锁当前线程:  "+Thread.currentThread().getName());
+            System.out.println("写数据获取锁当前线程:  "+Thread.currentThread().getName());
         } catch (InterruptedException ex) {
             Logger.getLogger(AioChannelSession.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -118,6 +127,7 @@ public class AioChannelSession<T> {
     protected Semaphore getWriteSemphore() {
         return writeSemphore;
     }
+    
     /**
      * 
      * @Title: readDataProcess   
@@ -142,7 +152,7 @@ public class AioChannelSession<T> {
      * @throws
      */
     public void readStickDataProcess(boolean readResult){  //粘包数据的处理
-        while(readByteBuffer.hasRemaining()&&(readByteBuffer.remaining()>=readByteBuffer.getInt(readByteBuffer.position()))){  //粘包的判断
+        while((readByteBuffer.remaining()>4)&&(readByteBuffer.remaining()>=readByteBuffer.getInt(readByteBuffer.position()))){  //粘包的判断
             T msg = ioServerConfig.getProtocol().decode(readByteBuffer, this);  //此时数据处于可读状态
             ioServerConfig.getMessageHandler().Process(this, msg);   //读完处理消息   
         }
@@ -174,4 +184,5 @@ public class AioChannelSession<T> {
     protected ByteBuffer getReadByteBuffer(){
         return this.readByteBuffer;
     }
+    
 }

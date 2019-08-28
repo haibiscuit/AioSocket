@@ -1,9 +1,9 @@
-package aiosocket;
+package aiosocket.StringProtocolTest;
 
 import Interface.MessageHandler;
 import Transport.AioChannelSession;
 import Transport.AioServer;
-import Transport.StringProtocol;
+import Transport.Protocol.StringProtocol;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 /**
  * 
  * @ClassName:  StringMessageServerHandler   
- * @Description: 实现MessageHandler类,即实现解码后的消息处理
- * @author: 申梦杰 
- * @date:   2019年7月3日 下午8:04:57
+ * @Description:String类型协议的服务端测试   
+ * @author: haibiscuit 
+ * @date:   2019年8月28日 下午1:30:52
  * @version 1.8.0   
  * @param    
  *
@@ -21,21 +21,13 @@ import java.util.logging.Logger;
 public class StringMessageServerHandler implements MessageHandler<String>{
     
     public static void main(String args[]){      //服务端测试用例
-        AioServer<String> server = new AioServer<>("127.0.0.1",6666,new StringProtocol(),new StringMessageServerHandler());//实例化服务端
+        AioServer<String> server = new AioServer<>("127.0.0.1",6666,new StringProtocol(),new StringMessageServerHandler());
         try {
             server.start();   //启动服务器
         } catch (IOException ex) {
             Logger.getLogger(StringMessageServerHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    /**
-     * 
-     * <p>Title: Process</p>   
-     * <p>Description: 处理客户端消息</p>   
-     * @param session
-     * @param message   
-     * @see Interface.MessageHandler#Process(Transport.AioChannelSession, java.lang.Object)
-     */
     @Override
     public void Process(AioChannelSession<String> session, String message) {  //接受到客户端消息后的处理逻辑
         System.out.println("收到客户端的信息:  "+message);

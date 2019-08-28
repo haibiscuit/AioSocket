@@ -1,8 +1,5 @@
 package Transport;
 
-import Interface.MessageHandler;
-import Interface.Protocol;
-import Interface.SessionFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -11,11 +8,15 @@ import java.nio.channels.AsynchronousServerSocketChannel;
 import java.nio.channels.AsynchronousSocketChannel;
 import java.nio.channels.CompletionHandler;
 import java.util.concurrent.ThreadFactory;
+
+import Interface.MessageHandler;
+import Interface.Protocol;
+import Interface.SessionFactory;
 /**
  * 
  * @ClassName:  AioServer   
  * @Description:服务端  
- * @author: 申梦杰 
+ * @author: haibiscuit 
  * @date:   2019年7月3日 下午8:40:34
  * @version 1.8.0   
  * @param  @param <T>  
@@ -26,14 +27,14 @@ public class AioServer<T>{
     
     protected AioServerConfig<T> config = new AioServerConfig<>();    //服务端配置
     
-    protected  ReadCompletionHandler<T> readCompletionHandler = null;   //读回调
+    protected ReadCompletionHandler<T> readCompletionHandler = null;   //读回调
     protected WriteCompletionHandler<T>  writeCompletionHandler = null;  //写回调
     
     private AsynchronousChannelGroup channelGroup = null;   //处理线程
     private AsynchronousServerSocketChannel serverSocketChannel = null;   //服务端channel
     
     private SocketAddress socketAddress = null;   //服务器地址
-    private SessionFactory<AioChannelSession<T>,AsynchronousSocketChannel> sessionFactory= null;
+    private SessionFactory<AioChannelSession<T>,AsynchronousSocketChannel> sessionFactory= null;    //会话工厂的创建
 
     /**
      * 
@@ -66,6 +67,7 @@ public class AioServer<T>{
         config.setHostString(host);
     }
     
+    
     /**
      * 
      * @Title: startServer   
@@ -83,6 +85,7 @@ public class AioServer<T>{
             socketAddress = new InetSocketAddress(config.getHostString(),config.getPort());
         }
         serverSocketChannel.bind(socketAddress);  //绑定端口和服务器
+        
         
         this.serverSocketChannel.accept(serverSocketChannel,new CompletionHandler<AsynchronousSocketChannel, AsynchronousServerSocketChannel>(){
 

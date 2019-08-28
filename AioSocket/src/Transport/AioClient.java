@@ -1,8 +1,5 @@
 package Transport;
 
-import Interface.MessageHandler;
-import Interface.Protocol;
-import Interface.SessionFactory;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -11,11 +8,15 @@ import java.nio.channels.AsynchronousSocketChannel;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadFactory;
 
+import Interface.MessageHandler;
+import Interface.Protocol;
+import Interface.SessionFactory;
+
 /**
  * 
  * @ClassName:  AioClient   
  * @Description:客户端   
- * @author: 申梦杰 
+ * @author: haibiscuit 
  * @date:   2019年7月3日 下午8:29:40
  * @version 1.8.0   
  * @param  @param <T>  
@@ -72,6 +73,8 @@ public class AioClient<T> {
 //        }
 //        socketChannel.bind(localAddress);    //绑定当前客户端地址
         socketChannel.connect(new InetSocketAddress(config.getHostString(),config.getPort())).get();
+//        SocketOption socketOption = StandardSocketOptions.SO_BROADCAST;     //设置SocketOption选项，参考http://www.what21.com/u/10004/6411239743520667605.htm
+        
         this.session = getSession(socketChannel);
         System.out.println("客户端服务器启动");
         return session;
@@ -137,7 +140,7 @@ public class AioClient<T> {
      */
     public final void setLocalAddress(String host,int port){
         if(localAddress==null){    
-//            System.out.println("创建socketAddress!");
+            System.out.println("创建socketAddress!");
             localAddress = host == null ? new InetSocketAddress(port) : new InetSocketAddress(host, port);
         }
     }

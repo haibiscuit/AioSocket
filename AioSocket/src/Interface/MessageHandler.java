@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Interface;
 
 import Transport.AioChannelSession;
@@ -12,7 +6,7 @@ import Transport.AioChannelSession;
  * 
  * @ClassName:  MessageHandler   
  * @Description:接收到消息的处理   
- * @author: 申梦杰 
+ * @author: haibiscuit 
  * @date:   2019年7月3日 下午8:07:35
  * @version 1.8.0   
  * @param  @param <T>  发送的消息类型
