@@ -3,7 +3,7 @@ package aiosocket;
  * 
  * @ClassName:  AioSocket   
  * @Description:AioSocket的特点介绍   
- * @author: 申梦杰 
+ * @author: haibiscuit
  * @date:   2019年8月28日 下午1:35:57
  * @version 1.8.0   
  * @param    
